@@ -11,16 +11,12 @@
     <main class="app-shell">
       <header class="topbar">
         <div>
-          <p class="eyebrow">充电前记录</p>
+          <p class="eyebrow">EV CHARGE LOG</p>
           <h1>电动车里程</h1>
         </div>
         <div class="top-actions">
-          <button class="icon-button" id="importBtn" type="button" aria-label="导入 JSON" title="导入 JSON">
-            <span aria-hidden="true">↑</span>
-          </button>
-          <button class="icon-button" id="exportBtn" type="button" aria-label="导出数据" title="导出数据">
-            <span aria-hidden="true">↓</span>
-          </button>
+          <button class="icon-button" id="importBtn" type="button" aria-label="导入 JSON" title="导入 JSON">导入</button>
+          <button class="icon-button primary" id="exportBtn" type="button" aria-label="导出数据" title="导出数据">备份</button>
           <input id="importFile" type="file" accept="application/json,.json" hidden />
         </div>
       </header>
@@ -33,7 +29,7 @@
           </div>
         </div>
         <div class="hero-copy">
-          <p>平均每次充电间隔</p>
+          <p>平均续航</p>
           <strong id="latestDistance">还没有记录</strong>
           <span id="recordCount">输入第一次总里程后开始追踪</span>
         </div>
@@ -66,7 +62,7 @@
       <section class="chart-section" aria-label="每次充电里程图表">
         <div class="section-head">
           <h2>续航趋势</h2>
-          <button class="ghost-button" id="clearBtn" type="button">清空</button>
+          <button class="ghost-button" id="clearBtn" type="button">清空记录</button>
         </div>
         <div class="chart-wrap">
           <canvas id="rangeChart" width="680" height="360"></canvas>

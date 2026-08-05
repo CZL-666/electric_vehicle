@@ -21,9 +21,17 @@ const gauge = document.querySelector(".gauge");
 let records = [];
 let storageMode = "browser";
 const STORAGE_KEY = "ev-charge-mileage-records-v2";
+const STORAGE_TEST_KEY = "ev-charge-mileage-storage-test";
 
 function isServerMode() {
-  return location.protocol === "http:" || location.protocol === "https:";
+  return location.hostname === "localhost" || location.hostname === "127.0.0.1";
+}
+
+function assertBrowserStorage() {
+  localStorage.setItem(STORAGE_TEST_KEY, "ok");
+  const value = localStorage.getItem(STORAGE_TEST_KEY);
+  localStorage.removeItem(STORAGE_TEST_KEY);
+  if (value !== "ok") throw new Error("浏览器存储不可用");
 }
 
 function normalizeRecords(nextRecords) {
@@ -40,6 +48,7 @@ function normalizeRecords(nextRecords) {
 async function loadRecords() {
   if (!isServerMode()) {
     storageMode = "browser";
+    assertBrowserStorage();
     const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     return normalizeRecords(Array.isArray(parsed) ? parsed : []);
   }
@@ -165,7 +174,7 @@ function drawChart() {
   ctx.clearRect(0, 0, rect.width, rect.height);
 
   const runs = getRuns().filter((run) => run.distance >= 0);
-  emptyChart.hidden = runs.length === 0 ? false : true;
+  emptyChart.hidden = runs.length !== 0;
   if (!runs.length) return;
 
   const width = rect.width;
@@ -300,7 +309,9 @@ exportBtn.addEventListener("click", () => {
   const link = document.createElement("a");
   link.href = url;
   link.download = "电动车充电里程记录.json";
+  document.body.appendChild(link);
   link.click();
+  link.remove();
   URL.revokeObjectURL(url);
 });
 
@@ -335,9 +346,13 @@ async function init() {
   } catch {
     storageMode = "browser";
     try {
+      assertBrowserStorage();
       records = normalizeRecords(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
     } catch {
       records = [];
+      render();
+      setNote("浏览器没有保留本机数据。请用 Safari 普通模式打开，不要用无痕模式或 App 内置浏览器。", true);
+      return;
     }
     render();
     setNote("当前使用本机浏览器保存。");
