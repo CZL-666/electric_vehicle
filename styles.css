@@ -142,48 +142,51 @@ h2 {
 
 .hero-panel {
   display: grid;
-  grid-template-columns: 116px minmax(0, 1fr);
+  grid-template-columns: 138px minmax(0, 1fr);
   gap: 16px;
   align-items: center;
-  min-height: 158px;
+  min-height: 142px;
   padding: 18px;
 }
 
-.gauge {
-  width: 116px;
-  aspect-ratio: 1;
+.hero-metric {
+  min-height: 106px;
   display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: conic-gradient(var(--accent) var(--gauge-value, 0deg), #e6ecef 0);
-  box-shadow: inset 0 0 0 1px rgba(15, 118, 110, 0.1);
-}
-
-.gauge-ring {
-  width: 84px;
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
   align-content: center;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.04);
+  gap: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(15, 118, 110, 0.16);
 }
 
-.gauge-ring span {
-  max-width: 72px;
+.hero-metric span {
+  color: var(--accent-strong);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.hero-metric strong {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+
+.hero-metric b {
+  max-width: 92px;
   overflow: hidden;
-  font-size: 24px;
-  font-weight: 900;
+  color: var(--accent-strong);
+  font-size: 34px;
   line-height: 1;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.gauge-ring small {
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 11px;
+.hero-metric small {
+  color: var(--accent-strong);
+  font-size: 14px;
+  font-weight: 800;
 }
 
 .hero-copy {
@@ -238,13 +241,14 @@ h2 {
 }
 
 .input-row button {
-  width: 82px;
+  width: 112px;
   height: 52px;
-  flex: 0 0 82px;
+  flex: 0 0 112px;
   border-radius: 8px;
   background: var(--accent);
   color: #fff;
   font-weight: 900;
+  font-size: 15px;
 }
 
 .input-row button:active,
@@ -341,6 +345,10 @@ h2 {
   line-height: 1.45;
 }
 
+.empty-chart[hidden] {
+  display: none;
+}
+
 .history-list {
   display: grid;
   gap: 9px;
@@ -416,26 +424,29 @@ h2 {
   }
 
   .hero-panel {
-    grid-template-columns: 98px minmax(0, 1fr);
+    grid-template-columns: 112px minmax(0, 1fr);
     gap: 13px;
     padding: 14px;
   }
 
-  .gauge {
-    width: 98px;
+  .hero-metric {
+    min-height: 96px;
+    padding: 12px;
   }
 
-  .gauge-ring {
-    width: 72px;
-  }
-
-  .gauge-ring span {
-    max-width: 62px;
-    font-size: 21px;
+  .hero-metric b {
+    max-width: 72px;
+    font-size: 28px;
   }
 
   .hero-copy strong {
     font-size: 19px;
+  }
+
+  .input-row button {
+    width: 98px;
+    flex-basis: 98px;
+    font-size: 14px;
   }
 
   .stats-grid {

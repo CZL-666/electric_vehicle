@@ -16,7 +16,6 @@ const bestRun = document.querySelector("#bestRun");
 const shortRun = document.querySelector("#shortRun");
 const totalRecords = document.querySelector("#totalRecords");
 const lastUpdated = document.querySelector("#lastUpdated");
-const gauge = document.querySelector(".gauge");
 
 let records = [];
 let storageMode = "browser";
@@ -121,15 +120,12 @@ function renderStats() {
   const shortest = runs.length ? Math.min(...runs.map((run) => run.distance)) : null;
 
   avgDistance.textContent = average === null ? "--" : Number(average.toFixed(1)).toLocaleString("zh-CN");
-  latestDistance.textContent = latestRun ? `上次充电跑了 ${formatKm(latestRun.distance)}` : "还没有记录";
-  recordCount.textContent = records.length > 1 ? `已计算 ${runs.length} 次充电间隔` : "输入第一次总里程后开始追踪";
+  latestDistance.textContent = latestRun ? `${formatKm(latestRun.distance)}` : "还没有记录";
+  recordCount.textContent = records.length > 1 ? `已计算 ${runs.length} 次充电间隔` : "记录第 1 次充电后开始追踪";
   bestRun.textContent = formatKm(best);
   shortRun.textContent = formatKm(shortest);
   totalRecords.textContent = `${records.length} 次`;
   lastUpdated.textContent = records.length ? `最近 ${formatDate(records.at(-1).date)}` : "--";
-
-  const gaugeValue = average === null ? 0 : Math.min(360, Math.max(24, (average / 80) * 360));
-  gauge.style.setProperty("--gauge-value", `${gaugeValue}deg`);
 }
 
 function renderHistory() {
@@ -271,7 +267,7 @@ form.addEventListener("submit", async (event) => {
   try {
     await saveRecords(nextRecords);
     input.value = "";
-    setNote(`已保存到${storageLabel()}。下次充电前再输入新的总里程。`);
+    setNote(`已记录 1 次充电，并保存到${storageLabel()}。`);
     render();
   } catch {
     setNote("保存失败，请刷新后重试。", true);
